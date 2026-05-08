@@ -1,4 +1,3 @@
-import base64
 from django.db import models
 
 
@@ -18,12 +17,6 @@ class Curso(models.Model):
         default='ABIERTO',
     )
     
-    # CAMPO PARA GUARDAR LA IMAGEN EN CARPETA MEDIA
-    foto = models.ImageField(upload_to='curso2/', blank=True, null=True)
-
-    # CAMPO BINARIO PARA LA IMAGEN EN LA BD
-    foto_binaria = models.BinaryField(blank=True, null=True)
-
     def abrir(self):
         self.estado = 'ABIERTO'
         self.save()
@@ -34,10 +27,3 @@ class Curso(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.codigo})"
-    
-    @property
-    def foto_base64_display(self):
-        if self.foto_binaria:
-            codificado = base64.b64encode(self.foto_binaria).decode('utf-8')
-            return f"data:image/png;base64,{codificado}"
-        return None
